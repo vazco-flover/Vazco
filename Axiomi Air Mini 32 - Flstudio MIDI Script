@@ -1,0 +1,57 @@
+# name=M-Audio Axiom A.I.R. Mini32
+print('working')
+
+
+import transport
+import midi
+import ui
+
+
+#Below are the variables which can be changed
+play_button = 17
+stop_button = 16
+record_button = 18
+prev =19
+next =20
+
+
+#Function starts from below
+def OnMidiMsg(event):
+    event.handled= False
+    print(event.midiId,event.status, event.port, event.data1, event.data2)
+    if event.midiId == midi.MIDI_CONTROLCHANGE:
+        #buttons
+        tc = event
+        global Mr,Ml,Mu,Md
+        if event.data2 > 0 and event.midiId ==176:
+            
+            #Basic Transport Controls
+            if event.data1 == play_button:
+                print('Start')
+                # print(f"Here port is {event.port} and it is of type {type(event.port)}")
+                transport.start()
+                event.handled = True
+            if event.data1 == stop_button:
+                print('Stop')
+                transport.stop()
+                event.handled = True
+            if event.data1 == record_button:
+                print('Record')
+                transport.record()
+                event.handled = True
+            if event.data1 == prev:
+                print('previus')
+                ui.previous()
+                event.handled = True		
+            if event.data1 == next:
+                print('Next')
+                ui.next()
+                event.handled = True	
+                 #up and down arrows for prev,next presets... #redundant with current jog wheels doing same thing :)
+
+
+
+     
+
+           
+    
